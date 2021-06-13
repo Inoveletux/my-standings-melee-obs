@@ -1,24 +1,29 @@
-import logo from './logo.svg';
+import React, {useState} from 'react';
 import './App.css';
+import axios from 'axios';
+axios.defaults.headers.get['Access-Control-Allow-Origin'] = '*';
 
 function App() {
+  const [tournamentid, setTournamentid] = useState();
+  // const axios = require('axios');
+  
+  let fectchTournamentData = "https://mtgmelee.com/Tournament/GetPhaseStandings/" + tournamentid;
+  
+  const handleSubmit = () => {
+    if(tournamentid){
+      axios.get(fectchTournamentData, )
+      .then((response)=> {
+        console.log(response)
+      })
+    }
+  }
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <>
+      <div>
+        <input onChange={(e)=>setTournamentid(e.target.value)} value={tournamentid}></input>
+        <button onClick={handleSubmit}></button>
+      </div>
+    </>
   );
 }
 
