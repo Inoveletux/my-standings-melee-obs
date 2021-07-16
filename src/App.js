@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import './App.css';
 import axios from 'axios';
-import ResultComponent from './ResultComponent'
+import ResultsComponent from './ResultsComponent'
 axios.defaults.headers.get['Access-Control-Allow-Origin'] = '*';
 
 function App() {
@@ -16,21 +16,16 @@ function App() {
       console.error(err)
     }
   };
-  console.log(results)
+  // console.log(results)
   return (
     <>
       <div>
         <button onClick={handleSubmit}>Refresh</button>
       </div>
       <div>
-        {results.map(result => 
-        <ResultComponent
-          name={result.name}
-          rank={result.rank}
-          decklist={result.decklist}
-          record={result.record}
+        <ResultsComponent
+          results={results}
         />
-        )}
       </div>
     </>
   );
