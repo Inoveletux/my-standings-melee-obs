@@ -1,27 +1,36 @@
-import React, {useState} from 'react';
+import React, { useState } from 'react';
 import './App.css';
 import axios from 'axios';
+import ResultComponent from './ResultComponent'
 axios.defaults.headers.get['Access-Control-Allow-Origin'] = '*';
 
 function App() {
-  const [tournamentid, setTournamentid] = useState();
-  // const axios = require('axios');
-  
-  let fectchTournamentData = "https://mtgmelee.com/Tournament/GetPhaseStandings/" + tournamentid;
-  
-  const handleSubmit = () => {
-    if(tournamentid){
-      axios.get(fectchTournamentData, )
-      .then((response)=> {
-        console.log(response)
-      })
+  const [results, setResults]=useState([])
+
+  const handleSubmit = async () => {
+    try{
+      const response = await axios.get(`http://localhost:3121/data`);
+      setResults(response.data)
+
+    }catch(err){
+      console.error(err)
     }
-  }
+  };
+  console.log(results)
   return (
     <>
       <div>
-        <input onChange={(e)=>setTournamentid(e.target.value)} value={tournamentid}></input>
-        <button onClick={handleSubmit}></button>
+        <button onClick={handleSubmit}>Refresh</button>
+      </div>
+      <div>
+        {results.map(result => 
+        <ResultComponent
+          name={result.name}
+          rank={result.rank}
+          decklist={result.decklist}
+          record={result.record}
+        />
+        )}
       </div>
     </>
   );
